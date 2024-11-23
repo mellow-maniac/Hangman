@@ -1,0 +1,56 @@
+
+def guess_check (guess, answer):
+ guess=guess.upper()
+ answer=list(answer)
+ new_hint=[]
+ guess=list(guess)    
+ i=0
+ while i<len(answer):
+       if guess[i]==answer[i]:
+           new_hint.append(guess[i])
+       elif guess[i] in answer:
+            new_hint.append("+")
+       else:
+        new_hint.append("*")
+       i=i+1
+ new_hint="".join(new_hint)
+ return new_hint 
+           
+    
+
+
+import random
+
+word_list=open ("words5000.csv","r")
+word_list=word_list.read()
+word_list=word_list.split(",")
+
+random_selection=random.randint(1, 5000)
+
+hidden_word=word_list[random_selection]
+hidden_word=hidden_word.upper()
+
+hint=[]
+initial_attempt=0
+
+i=0
+while i<len(hidden_word):
+ hint.append("_")
+ i=i+1
+guess="                "
+hint=" ".join(hint)
+print("The hidden word is", len(hidden_word), "characters long")
+user_guess=input("Can you guess what it is? ")
+while len(user_guess) != len(hidden_word):
+    print("Your guess does not match the length of the hidden word")
+    user_guess=input("Try again: ")
+
+while guess_check(user_guess, hidden_word)!= hidden_word:
+    print (guess_check(user_guess, hidden_word))
+    hint=guess_check(user_guess, hidden_word)
+    user_guess=input("Your guess is incorrect. Please Try again: ")
+    while len(user_guess) != len(hidden_word):
+        print("Your guess does not match the length of the hidden word")
+        user_guess=input("Try again: ")
+if guess_check(user_guess,hidden_word)==hidden_word:
+  print("You have guessed the word correctly!")
